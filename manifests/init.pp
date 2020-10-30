@@ -1,7 +1,10 @@
-class apache {
+class apache (
+  String $install_name,
+) {
   include apache::install
-  
-  service { 'httpd':
+
+  service { "${install_name}":
     ensure => running,
+    enable => true,
   }
 }
