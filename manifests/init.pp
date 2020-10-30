@@ -1,10 +1,14 @@
 class apache (
   String $install_name,
+  Array $config_paths,
+  String $service_name,
+  String $vhost_dir,
 ) {
-  include apache::install
+  contain apache::install
+  contain apache::config
+  contain apache::service
 
-  service { "${install_name}":
-    ensure => running,
-    enable => true,
-  }
+  Class['::apache::install']
+  -> Class['::apache::config']
+  ~> Class['::apache::service']
 }
